@@ -50,9 +50,9 @@ function Phase2(fileName, extension)
     %Task 4 - Filter Design
     
     %Step A: Determining the frequency bands
-%     100HzMels = frq2mel(100)
-%     8kHzMels = frq2mel(8000)
-    
+    melsLowerBound = frq2mel(100);
+    melsUpperBound = frq2mel(8000);
+    melsChannels = linspace(melsLowerBound, melsUpperBound, 9);
     
     %Task 5 - Filter the sound
     
