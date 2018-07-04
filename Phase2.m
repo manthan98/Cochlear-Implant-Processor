@@ -61,6 +61,15 @@ function Phase2(fileName, extension)
     %Convert channels from pitches (mels) to frequency (Hz)
     freqChannels = mel2frq(melsChannels);
     
+    ones = [1 1 1 1 1 1 1 1 1];
+    %Plotting visual rep of channel widths (pitch in mels)
+    figure;
+    plot(melsChannels, ones, '-x');
+    
+    %Plotting visual rep of channel widths (frequency in Hz)
+    figure;
+    plot(freqChannels, ones, '-o');
+    
     %Task 5 - Filter the sound
     
     %Task 6 - Plot output signals of lowest/highest freq channels
