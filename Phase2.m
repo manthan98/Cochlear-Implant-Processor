@@ -11,7 +11,7 @@ function Phase2(fileName, extension)
     end
 
     % 3.3
-    sound(y, Fs);
+    %sound(y, Fs);
 
     % 3.4
     audiowrite(strcat('mono',fileName, '.wav'), y, Fs);
@@ -26,6 +26,8 @@ function Phase2(fileName, extension)
     if Fs > 16000
         y = resample(y, 16000, Fs);
     end
+    
+    %sound(y, Fs);
 
     % 3.7
     newSize = size(y);
@@ -36,7 +38,7 @@ function Phase2(fileName, extension)
     
     %DON'T NEED THIS FOR PHASE 2
     % cos(2*pi*frequency*x)
-    %frequency = 1000;
+    %frequensy = 1000;
     %cosSignal = cos(2*frequency*pi*x);
     %sound(cosSignal, Fs);
     %now taking a subset of the x and cos signals so that we can plot 2
@@ -52,7 +54,10 @@ function Phase2(fileName, extension)
     %Step A: Determining the frequency bands
     melsLowerBound = frq2mel(100);
     melsUpperBound = frq2mel(8000);
-    melsChannels = linspace(melsLowerBound, melsUpperBound, 9);
+    melsChannels = linspace(melsLowerBound, melsUpperBound, 9)
+    
+    test = butterworth(y, 150.5, 486.7, 100, 510);
+    sound(test, Fs);
     
     %Task 5 - Filter the sound
     
