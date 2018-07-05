@@ -1,4 +1,4 @@
-function y = butterworth(input, pass1, pass2, stop1, stop2)
+function y = butterworth(input, stop1, pass1, pass2, stop2)
 % Butterworth filter takes input, passband range, and stopband range and returns output y.
 
 persistent Hd;
