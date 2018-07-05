@@ -73,8 +73,10 @@ function Phase2(fileName, extension)
     plot(freqChannels, ones, '-o');
     
     %use a butterworth filter and playback
-    test = butterworth(y, 150.5, 486.7, 100, 510);
-    sound(test, Fs);
+    testButterworth = butterworth(y, 100, 150.5, 486.7, 510);
+    testElliptic = elliptic(y, 100, 150.5, 486.7, 510);
+    testChebyshev2 = chebyshev2(y, 100, 150.5, 486.7, 510);
+    sound(testElliptic, Fs);
     
     %Task 5 - Filter the sound
     
