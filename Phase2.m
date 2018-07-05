@@ -14,7 +14,7 @@ function Phase2(fileName, extension)
     %sound(y, Fs);
 
     % 3.4
-    audiowrite(strcat('mono',fileName, '.wav'), y, Fs);
+    %audiowrite(strcat('mono',fileName, '.wav'), y, Fs);
 
     % 3.5
     %plotting audio as a function of sample num
@@ -52,10 +52,27 @@ function Phase2(fileName, extension)
     %Task 4 - Filter Design
     
     %Step A: Determining the frequency bands
+    %Determine upper and lower bounds of human hearing in mels (unit of
+    %pitch)
     melsLowerBound = frq2mel(100);
     melsUpperBound = frq2mel(8000);
-    melsChannels = linspace(melsLowerBound, melsUpperBound, 9)
     
+    %Divide pitches into 8 channels of even width
+    melsChannels = linspace(melsLowerBound, melsUpperBound, 9);
+    
+    %Convert channels from pitches (mels) to frequency (Hz)
+    freqChannels = mel2frq(melsChannels);
+    
+    ones = [1 1 1 1 1 1 1 1 1];
+    %Plotting visual rep of channel widths (pitch in mels)
+    figure;
+    plot(melsChannels, ones, '-x');
+    
+    %Plotting visual rep of channel widths (frequency in Hz)
+    figure;
+    plot(freqChannels, ones, '-o');
+    
+    %use a butterworth filter and playback
     test = butterworth(y, 150.5, 486.7, 100, 510);
     sound(test, Fs);
     
