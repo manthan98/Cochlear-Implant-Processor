@@ -61,7 +61,7 @@ function Phase2(fileName, extension)
     melsChannels = linspace(melsLowerBound, melsUpperBound, 9);
     
     %Convert channels from pitches (mels) to frequency (Hz)
-    freqChannels = mel2frq(melsChannels);
+    freqChannels = mel2frq(melsChannels)
     
     ones = [1 1 1 1 1 1 1 1 1];
     %Plotting visual rep of channel widths (pitch in mels)
