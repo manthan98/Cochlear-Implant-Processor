@@ -98,6 +98,8 @@ function Phase2(fileName, extension, N)
     plot(highestFFT);
     
     % Task 7 - Rectify output of bandpass signals (envelope pt 1)
+    rectifiedSoundChannels = abs(soundChannels);
+    plotSignal(channelLength, rectifiedSoundChannels(N, :));
     
     % Task 8 - Detect envelopes of rectified signals using LPF 400Fc
     % (envelope part 2).
