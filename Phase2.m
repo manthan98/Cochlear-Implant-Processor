@@ -18,10 +18,7 @@ function Phase2(fileName, extension, N)
 
     % 3.5
     %plotting audio as a function of sample num
-    sampleNumVector = linspace(1, soundSize(1), soundSize(1));
-    figure;
-    plot(sampleNumVector, y);
-
+    plotSignal(soundSize(1), y);
     % 3.6
     if Fs > 16000
         y = resample(y, 16000, Fs);
@@ -69,7 +66,8 @@ function Phase2(fileName, extension, N)
     %use a filter to split the noise into N channels
     for elm = 1:N
         % Generate Butterworth filter with the given bands.
-%         filt = getButterworthFilter(freqChannels(elm), freqChannels(elm + 1));
+        %filt = getButterworthFilter(freqChannels(elm), freqChannels(elm + 1));
+        % Generate Equiripple filter with the given bands.
         filt = getEquirippleFilter(freqChannels(elm), freqChannels(elm + 1));
         
         % Use the filter on the given sound input.
@@ -79,10 +77,18 @@ function Phase2(fileName, extension, N)
         soundChannels(elm, :) = transpose(filteredChannel);
     end
     
-    % Playback.
-    sound(soundChannels(9, :), Fs);
-    
     % Task 6 - Plot output signals of lowest/highest freq channels
+    lowestChannel = soundChannels(1, :)
+    highestChannel = soundChannels(N, :);
+    
+    sound(highestChannel, Fs);
+    channelSize = size(lowestChannel)
+    
+    %plotting lowest channel as a function of sample num
+    plotSignal(channelSize(2), lowestChannel);
+    
+    %plotting highest channel as a function of sample num
+    plotSignal(channelSize(2), highestChannel);
     
     % Task 7 - Rectify output of bandpass signals (envelope pt 1)
     
