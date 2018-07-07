@@ -6,7 +6,7 @@ function Phase2(fileName, extension, N)
     % 3.2
     soundSize = size(y);
     if soundSize(2) > 1
-        % Converting to mono
+        % Converting to Mono.
         y = sum(y, 2)/size(y,2);
     end
 
@@ -31,31 +31,20 @@ function Phase2(fileName, extension, N)
 
     % 3.7
     newSize = size(y);
+    
     % Duration of signal is number of samples divided by freq
     duration = newSize(1)/16000;
+    
     % From time = 0 to duration of signal with n samples
     x = linspace(0, duration, newSize(1));
     
-    %DON'T NEED THIS FOR PHASE 2
-    % cos(2*pi*frequency*x)
-    %frequensy = 1000;
-    %cosSignal = cos(2*frequency*pi*x);
-    %sound(cosSignal, Fs);
-    %now taking a subset of the x and cos signals so that we can plot 2
-    %waveforms
-    %x_subset = x(1, 1:33);
-    %cos_subset = cosSignal(1, 1:33);
-    %figure;
-    %plot(x_subset, cos_subset);
-    
-    %Phase 2 Starts Here
     %Task 4 - Filter Design
     
     %Step A: Determining the frequency bands
     %Determine upper and lower bounds of human hearing in mels (unit of
     %pitch)
     melsLowerBound = frq2mel(100);
-    melsUpperBound = frq2mel(8000);
+    melsUpperBound = frq2mel(7500); % Should be 8000.
     
     %Divide pitches into N channels of even width
     melsChannels = linspace(melsLowerBound, melsUpperBound, N + 1)
@@ -74,27 +63,32 @@ function Phase2(fileName, extension, N)
     
     %initialize an array to store each channel of the inputted sound
     soundChannels = zeros(N, length(y));
-    %use a filter to split the noise into N channels
-    for elm = 1:N
-        filteredChannel = elliptic(y, freqChannels(elm) - 50, freqChannels(elm), freqChannels(elm + 1), freqChannels(elm) + 50);
-        soundChannels(elm, :) = transpose(filteredChannel);
-    end
-  
-    sound(elliptic(y, 100, 150, 800, 850), Fs);
-    %sound(chebyshev2(y, 100, 150, 8000, 8050), Fs);
-    %sound(y, Fs);
-    valid = elliptic(y, 100, 150, 800, 850) == elliptic(y, 900, 950, 1800, 1850)
     
     %Task 5 - Filter the sound
     
-    %Task 6 - Plot output signals of lowest/highest freq channels
+    %use a filter to split the noise into N channels
+    for elm = 1:N
+        % Generate Butterworth filter with the given bands.
+        filt = getButterworthFilter(freqChannels(elm), freqChannels(elm + 1));
+        
+        % Use the filter on the given sound input.
+        filteredChannel = filter(filt, y);
+        
+        % Store it in the soundChannels matrix.
+        soundChannels(elm, :) = transpose(filteredChannel);
+    end
     
-    %Task 7 - Rectify output of bandpass signals (envelope pt 1)
+    % Playback.
+    sound(soundChannels(5, :), Fs);
     
-    %Task 8 - Detect envelopes of rectified signals using LPF 400Fc (envelope pt
-    %2)
+    % Task 6 - Plot output signals of lowest/highest freq channels
     
-    %Task 9 - Plot envelope of lowest and highest frequency signals
+    % Task 7 - Rectify output of bandpass signals (envelope pt 1)
+    
+    % Task 8 - Detect envelopes of rectified signals using LPF 400Fc
+    % (envelope part 2).
+    
+    % Task 9 - Plot envelope of lowest and highest frequency signals.
     
 end
 
