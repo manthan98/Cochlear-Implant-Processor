@@ -66,9 +66,9 @@ function Phase2(fileName, extension, N)
     %use a filter to split the noise into N channels
     for elm = 1:N
         % Generate Butterworth filter with the given bands.
-        %filt = getButterworthFilter(freqChannels(elm), freqChannels(elm + 1));
+        filt = getButterworthFilter(freqChannels(elm), freqChannels(elm + 1));
         % Generate Equiripple filter with the given bands.
-        filt = getEquirippleFilter(freqChannels(elm), freqChannels(elm + 1));
+        %filt = getEquirippleFilter(freqChannels(elm), freqChannels(elm + 1));
         
         % Use the filter on the given sound input.
         filteredChannel = filter(filt, y);
@@ -78,17 +78,22 @@ function Phase2(fileName, extension, N)
     end
     
     % Task 6 - Plot output signals of lowest/highest freq channels
-    lowestChannel = soundChannels(1, :)
+    lowestChannel = soundChannels(1, :);
     highestChannel = soundChannels(N, :);
-    
-    sound(highestChannel, Fs);
-    channelSize = size(lowestChannel)
+    channelLength = length(lowestChannel);
     
     %plotting lowest channel as a function of sample num
-    plotSignal(channelSize(2), lowestChannel);
+    plotSignal(channelLength, lowestChannel);
     
     %plotting highest channel as a function of sample num
-    plotSignal(channelSize(2), highestChannel);
+    plotSignal(channelLength, highestChannel);
+    
+    %Plotting the highest and lowest channels against frequency
+    lowestFFT = abs(fft(lowestChannel));
+    highestFFT = abs(fft(highestChannel));
+    %Calculate the frequency axis, which is defined by the sampling rate
+    plot(lowestFFT);
+    plot(highestFFT);
     
     % Task 7 - Rectify output of bandpass signals (envelope pt 1)
     
