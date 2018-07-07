@@ -1,4 +1,4 @@
-function Phase2(fileName, extension)
+function Phase2(fileName, extension, N)
     soundFile = strcat(fileName, '.', extension);
     % 3.1
     [y, Fs] = audioread(soundFile);
@@ -57,23 +57,23 @@ function Phase2(fileName, extension)
     melsLowerBound = frq2mel(100);
     melsUpperBound = frq2mel(8000);
     
-    %Divide pitches into 8 channels of even width
-    melsChannels = linspace(melsLowerBound, melsUpperBound, 9);
+    %Divide pitches into N channels of even width
+    melsChannels = linspace(melsLowerBound, melsUpperBound, N + 1)
     
     %Convert channels from pitches (mels) to frequency (Hz)
     freqChannels = mel2frq(melsChannels);
     
-    ones = [1 1 1 1 1 1 1 1 1];
+    arr = ones(N + 1);
     %Plotting visual rep of channel widths (pitch in mels)
     figure;
-    plot(melsChannels, ones, '-x');
+    plot(melsChannels, arr, '-x');
     
     %Plotting visual rep of channel widths (frequency in Hz)
     figure;
-    plot(freqChannels, ones, '-o');
+    plot(freqChannels, arr, '-o');
     
     %use a butterworth filter and playback
-    test = butterworth(y, 150.5, 486.7, 100, 510);
+    test = butterworth(y, 150.5, 486.7, 100, 510)
     sound(test, Fs);
     
     %Task 5 - Filter the sound
