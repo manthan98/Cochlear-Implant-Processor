@@ -92,7 +92,9 @@ function Phase2(fileName, extension, N)
     lowestFFT = abs(fft(lowestChannel));
     highestFFT = abs(fft(highestChannel));
     %Calculate the frequency axis, which is defined by the sampling rate
+    figure;
     plot(lowestFFT);
+    figure;
     plot(highestFFT);
     
     % Task 7 - Rectify output of bandpass signals (envelope pt 1)
