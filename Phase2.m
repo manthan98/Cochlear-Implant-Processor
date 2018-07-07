@@ -117,6 +117,13 @@ function Phase2(fileName, extension, N)
     end
     
     % Task 9 - Plot envelope of lowest and highest frequency signals.
+    lowestEnvelopedChannel = envelopedSoundChannels(1, :);
+    highestEnvelopedChannel = envelopedSoundChannels(N, :);
+    %plotting lowest channel as a function of sample num
+    %plotSignal(channelLength, lowestEnvelopedChannel);
+    
+    %plotting highest channel as a function of sample num
+    %plotSignal(channelLength, highestEnvelopedChannel);
     
 end
 
