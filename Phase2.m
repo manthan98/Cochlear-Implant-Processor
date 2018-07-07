@@ -104,6 +104,18 @@ function Phase2(fileName, extension, N)
     % Task 8 - Detect envelopes of rectified signals using LPF 400Fc
     % (envelope part 2).
     
+    % Generate lowpass filter with the given bands.
+    % lpf = getLowpassFilter(400Hz cutoff);
+    
+    %initialize an array to store each enveloped channel
+    envelopedSoundChannels = zeros(N, length(y));
+    
+    for elm = 1:N
+        %filter each rectified channel and store it in
+        %envelopedSoundChannels
+        envelopedSoundChannels(elm, :) = filter(filt, rectifiedSoundChannels(elm, :));
+    end
+    
     % Task 9 - Plot envelope of lowest and highest frequency signals.
     
 end
