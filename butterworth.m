@@ -1,14 +1,14 @@
-function y = butterworth(input, pass1, pass2, stop1, stop2)
+function y = butterworth(input, pass1, pass2)
 % Butterworth filter takes input, passband range, and stopband range and returns output y.
 
 persistent Hd;
 
 if isempty(Hd)
     
-    Fstop1 = stop1;    % First Stopband Frequency
+    Fstop1 = pass1 - 50;    % First Stopband Frequency
     Fpass1 = pass1;  % First Passband Frequency
     Fpass2 = pass2;  % Second Passband Frequency
-    Fstop2 = stop2;    % Second Stopband Frequency
+    Fstop2 = pass2 + 50;    % Second Stopband Frequency
     Astop1 = 60;      % First Stopband Attenuation (dB)
     Apass  = 1;       % Passband Ripple (dB)
     Astop2 = 60;      % Second Stopband Attenuation (dB)

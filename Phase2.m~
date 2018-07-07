@@ -73,14 +73,8 @@ function Phase2(fileName, extension, N)
     plot(freqChannels, arr, '-o');
     
     %use a butterworth filter and playback
-%     test = butterworth(y, 150.5, 486.7, 100, 510)
-%     sound(test, Fs);
-    
-    [m, n] = size(N);
-    for elm = 1:(n - 1)
-        test = butterworth(y, N(elm), N(elm + 1));
-        sound(test, Fs);
-    end
+    test = butterworth(y, 150.5, 486.7, 100, 510)
+    sound(test, Fs);
     
     %Task 5 - Filter the sound
     
