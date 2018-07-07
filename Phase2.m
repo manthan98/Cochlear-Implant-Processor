@@ -73,14 +73,17 @@ function Phase2(fileName, extension, N)
     plot(freqChannels, arr, '-o');
     
     %initialize an array to store each channel of the inputted sound
-    soundChannels = zeros(N, 1);
+    soundChannels = zeros(N, length(y));
     %use a filter to split the noise into N channels
-    for elm = 1:(N - 1)
-        %add channel to the soundChannels array
-        soundChannels(elm) = butterworth(y, freqChannels(elm), freqChannels(elm + 1));
+    for elm = 1:N
+        filteredChannel = elliptic(y, freqChannels(elm) - 50, freqChannels(elm), freqChannels(elm + 1), freqChannels(elm) + 50);
+        soundChannels(elm, :) = transpose(filteredChannel);
     end
-    
-    soundChannels
+  
+    sound(elliptic(y, 100, 150, 800, 850), Fs);
+    %sound(chebyshev2(y, 100, 150, 8000, 8050), Fs);
+    %sound(y, Fs);
+    valid = elliptic(y, 100, 150, 800, 850) == elliptic(y, 900, 950, 1800, 1850)
     
     %Task 5 - Filter the sound
     
