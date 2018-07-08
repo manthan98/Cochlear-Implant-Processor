@@ -44,10 +44,10 @@ function Phase2(fileName, extension, N)
     melsUpperBound = frq2mel(7900); % Should be 8000.
     
     %Divide pitches into N channels of even width
-    melsChannels = linspace(melsLowerBound, melsUpperBound, N + 1)
+    melsChannels = linspace(melsLowerBound, melsUpperBound, N + 1);
     
     %Convert channels from pitches (mels) to frequency (Hz)
-    freqChannels = mel2frq(melsChannels)
+    freqChannels = mel2frq(melsChannels);
     
     arr = ones(N + 1);
     %Plotting visual rep of channel widths (pitch in mels)
@@ -65,10 +65,8 @@ function Phase2(fileName, extension, N)
     
     %use a filter to split the noise into N channels
     for elm = 1:N
-        % Generate Butterworth filter with the given bands.
-        filt = getButterworthFilter(freqChannels(elm), freqChannels(elm + 1));
-        % Generate Equiripple filter with the given bands.
-        %filt = getEquirippleFilter(freqChannels(elm), freqChannels(elm + 1));
+        % Generate Kaiser Window filter with the given bands.
+        filt = getKaiserWindow(freqChannels(elm), freqChannels(elm + 1));
         
         % Use the filter on the given sound input.
         filteredChannel = filter(filt, y);
@@ -99,31 +97,26 @@ function Phase2(fileName, extension, N)
     
     % Task 7 - Rectify output of bandpass signals (envelope pt 1)
     rectifiedSoundChannels = abs(soundChannels);
-    plotSignal(channelLength, rectifiedSoundChannels(N, :));
+    plotSignal(channelLength, rectifiedSoundChannels(1, :));
     
     % Task 8 - Detect envelopes of rectified signals using LPF 400Fc
     % (envelope part 2).
-    
-    % Generate lowpass filter with the given bands.
-    % lpf = getLowpassFilter(400Hz cutoff);
     
     %initialize an array to store each enveloped channel
     envelopedSoundChannels = zeros(N, length(y));
     
     for elm = 1:N
-        %filter each rectified channel and store it in
+        %filter each rectified channel using a kaiser window LPF and store it in
         %envelopedSoundChannels
-        envelopedSoundChannels(elm, :) = filter(filt, rectifiedSoundChannels(elm, :));
+        envelopedSoundChannels(elm, :) = kaiserWindowLPF(rectifiedSoundChannels(elm, :));
     end
-    
+   
     % Task 9 - Plot envelope of lowest and highest frequency signals.
-    lowestEnvelopedChannel = envelopedSoundChannels(1, :);
-    highestEnvelopedChannel = envelopedSoundChannels(N, :);
     %plotting lowest channel as a function of sample num
-    %plotSignal(channelLength, lowestEnvelopedChannel);
+    plotSignal(channelLength, envelopedSoundChannels(1, :));
     
     %plotting highest channel as a function of sample num
-    %plotSignal(channelLength, highestEnvelopedChannel);
+    plotSignal(channelLength, envelopedSoundChannels(N, :));
     
 end
 
