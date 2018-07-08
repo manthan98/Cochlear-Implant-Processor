@@ -105,10 +105,12 @@ function Phase2(fileName, extension, N)
     %initialize an array to store each enveloped channel
     envelopedSoundChannels = zeros(N, length(y));
     
+    lpf = getKaiserWindowLPF();
+    
     for elm = 1:N
         %filter each rectified channel using a kaiser window LPF and store it in
         %envelopedSoundChannels
-        envelopedSoundChannels(elm, :) = kaiserWindowLPF(rectifiedSoundChannels(elm, :));
+        envelopedSoundChannels(elm, :) = filter(lpf, rectifiedSoundChannels(elm, :));
     end
    
     % Task 9 - Plot envelope of lowest and highest frequency signals.

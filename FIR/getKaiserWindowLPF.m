@@ -1,4 +1,4 @@
-function output = kaiserWindowLPF(input)
+function Hd = getKaiserWindowLPF()
 %GETKAISERWINDOWLPF Returns a discrete-time filter object.
 
 % MATLAB Code
@@ -14,8 +14,6 @@ Fs    = 16000;  % Sampling Frequency
 h = fdesign.lowpass('fp,fst,ap,ast', Fpass, Fstop, Apass, Astop, Fs);
 
 Hd = design(h, 'kaiserwin');
-
-output = filter(Hd, input)
 
 
 
