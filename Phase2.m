@@ -98,11 +98,32 @@ function Phase2(fileName, extension, N)
     plot(highestFFT);
     
     % Task 7 - Rectify output of bandpass signals (envelope pt 1)
+    rectifiedSoundChannels = abs(soundChannels);
+    plotSignal(channelLength, rectifiedSoundChannels(N, :));
     
     % Task 8 - Detect envelopes of rectified signals using LPF 400Fc
     % (envelope part 2).
     
+    % Generate lowpass filter with the given bands.
+    % lpf = getLowpassFilter(400Hz cutoff);
+    
+    %initialize an array to store each enveloped channel
+    envelopedSoundChannels = zeros(N, length(y));
+    
+    for elm = 1:N
+        %filter each rectified channel and store it in
+        %envelopedSoundChannels
+        envelopedSoundChannels(elm, :) = filter(filt, rectifiedSoundChannels(elm, :));
+    end
+    
     % Task 9 - Plot envelope of lowest and highest frequency signals.
+    lowestEnvelopedChannel = envelopedSoundChannels(1, :);
+    highestEnvelopedChannel = envelopedSoundChannels(N, :);
+    %plotting lowest channel as a function of sample num
+    %plotSignal(channelLength, lowestEnvelopedChannel);
+    
+    %plotting highest channel as a function of sample num
+    %plotSignal(channelLength, highestEnvelopedChannel);
     
 end
 
