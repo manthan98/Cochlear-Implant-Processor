@@ -18,7 +18,7 @@ function Phase2(fileName, extension, N)
 
     % 3.5
     %plotting audio as a function of sample num
-    plotSignal(soundSize(1), y);
+    plotSignal(soundSize(1), y, 'Sample', 'Magnitude');
     % 3.6
     if Fs > 16000
         y = resample(y, 16000, Fs);
@@ -81,10 +81,10 @@ function Phase2(fileName, extension, N)
     channelLength = length(lowestChannel);
     
     %plotting lowest channel as a function of sample num
-    plotSignal(channelLength, lowestChannel);
+    plotSignal(channelLength, lowestChannel, 'Sample', 'Magnitude');
     
     %plotting highest channel as a function of sample num
-    plotSignal(channelLength, highestChannel);
+    plotSignal(channelLength, highestChannel, 'Sample', 'Magnitude');
     
     %Plotting the highest and lowest channels against frequency
     lowestFFT = abs(fft(lowestChannel));
@@ -97,7 +97,6 @@ function Phase2(fileName, extension, N)
     
     % Task 7 - Rectify output of bandpass signals (envelope pt 1)
     rectifiedSoundChannels = abs(soundChannels);
-    plotSignal(channelLength, rectifiedSoundChannels(1, :));
     
     % Task 8 - Detect envelopes of rectified signals using LPF 400Fc
     % (envelope part 2).
@@ -115,10 +114,10 @@ function Phase2(fileName, extension, N)
    
     % Task 9 - Plot envelope of lowest and highest frequency signals.
     %plotting lowest channel as a function of sample num
-    plotSignal(channelLength, envelopedSoundChannels(1, :));
+    plotSignal(channelLength, envelopedSoundChannels(1, :), 'Sample', 'Magnitude');
     
     %plotting highest channel as a function of sample num
-    plotSignal(channelLength, envelopedSoundChannels(N, :));
+    plotSignal(channelLength, envelopedSoundChannels(N, :), 'Sample', 'Magnitude');
     
 end
 
