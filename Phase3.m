@@ -50,7 +50,6 @@ function Phase3(fileName, extension, N)
     
     %Convert channels from pitches (mels) to frequency (Hz)
     freqChannels = mel2frq(melsChannels);
-    
     arr = ones(N + 1);
     %Plotting visual rep of channel widths (pitch in mels)
     figure;
@@ -125,12 +124,18 @@ function Phase3(fileName, extension, N)
     
     %Task 10 - generate cosine functions
     
-    % Below is the old code used to generate the cos signal
-    % From time = 0 to duration of signal with n samples.
-    %x = linspace(0, duration, newSize(1));
-    %cosSignal = cos(2000*pi*x);
-    %figure;
-    %plot(x, cosSignal);
+    %Create array of cosine signals at the center freq of each channel
+    for elm = 1:N
+        % Create vector from time = 0 to duration of signal with n samples.
+        duration = channelLength/16000;
+        x = linspace(0, duration, channelLength);
+        % Each center freq is the arithmetic mean of the channel's two
+        % cutoff frequencies
+        centerFreq = (freqChannels(elm) + freqChannels(elm + 1))/2;
+        %create cos signal that resonates at center freq
+        cosSignal =  cos(centerFreq*2*pi*x);
+        cosineSignals(elm, :) = cosSignal;
+    end
     
     %Task 11 - Amplitude modulate cosines using rectified signal of each channel
     %Task 12 - Add signals from task 11
