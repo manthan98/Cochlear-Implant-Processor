@@ -138,6 +138,18 @@ function Phase3(fileName, extension, N)
     end
     
     %Task 11 - Amplitude modulate cosines using rectified signal of each channel
+    
+    %to amplitude modulate the cosine using the rectified signal, we must
+    %multiply each point of the cosine with each point of the enveloped
+    %signal
+    for elm = 1:N
+        carrier = envelopedSoundChannels(elm, :);
+        modulator = cosineSignals(elm, :);
+        AMSignals(elm, :) = carrier .* modulator;
+    end 
+    
+    %NOTE: TEST TASK 11 CODE, HAVEN'T TESTED YET
+    
     %Task 12 - Add signals from task 11
     %Task 13 - Play output sound and write to file
     
