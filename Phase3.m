@@ -148,9 +148,19 @@ function Phase3(fileName, extension, N)
         AMSignals(elm, :) = carrier .* modulator;
     end 
     
-    %NOTE: TEST TASK 11 CODE, HAVEN'T TESTED YET
-    
     %Task 12 - Add signals from task 11
+    
+    for elm = 1:N
+        %add signals from task 11
+        outputSignal = outputSignal + AMSignals(elm, :);
+    end
+    
+    maxVal = max(outputSignal);
+    %normalize the output signal by its max val
+    outputSignal = outputSignal/maxVal;
+    
+    %NOTE: TEST TASK 11/12 CODE, HAVEN'T TESTED YET
+    
     %Task 13 - Play output sound and write to file
     
 end
