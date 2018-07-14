@@ -22,6 +22,9 @@ function Phase3(fileName, extension, N)
     % 3.6
     if Fs > 16000
         y = resample(y, 16000, Fs);
+        %make our sampling rate variable equal to 16000 now that our signal has been resampled, just for future
+        %reference
+        Fs = 16000;
     end
     
     %sound(y, Fs);
@@ -159,8 +162,11 @@ function Phase3(fileName, extension, N)
     %normalize the output signal by its max val
     outputSignal = outputSignal/maxVal;
     
-    %NOTE: TEST TASK 11/12 CODE, HAVEN'T TESTED YET
+    %Task 13
+    %Play output sound
+    sound(outputSignal, Fs)
+    %Write to file
+    audiowrite(strcat('output',fileName, '.wav'), outputSignal, Fs);
     
-    %Task 13 - Play output sound and write to file
-    
+    %NOTE: TEST TASK 11/12/13 CODE, HAVEN'T TESTED YET
 end
