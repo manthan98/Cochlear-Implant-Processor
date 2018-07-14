@@ -152,7 +152,7 @@ function Phase3(fileName, extension, N)
     end 
     
     %Task 12 - Add signals from task 11
-    
+    outputSignal = zeros(1, channelLength);
     for elm = 1:N
         %add signals from task 11
         outputSignal = outputSignal + AMSignals(elm, :);
@@ -167,6 +167,4 @@ function Phase3(fileName, extension, N)
     sound(outputSignal, Fs)
     %Write to file
     audiowrite(strcat('output',fileName, '.wav'), outputSignal, Fs);
-    
-    %NOTE: TEST TASK 11/12/13 CODE, HAVEN'T TESTED YET
 end
