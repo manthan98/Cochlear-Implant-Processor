@@ -134,7 +134,7 @@ function Phase3(fileName, extension, N)
         x = linspace(0, duration, channelLength);
         % Each center freq is the arithmetic mean of the channel's two
         % cutoff frequencies
-        centerFreq = (freqChannels(elm) + freqChannels(elm + 1))/2;
+        centerFreq = sqrt(freqChannels(elm)*freqChannels(elm + 1));
         %create cos signal that resonates at center freq
         cosSignal =  cos(centerFreq*2*pi*x);
         cosineSignals(elm, :) = cosSignal;
