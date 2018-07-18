@@ -6,7 +6,7 @@ function Hd = getKaiserWindowLPF()
 % Generated on: 07-Jul-2018 21:11:50
 
 Fpass = 400;    % Passband Frequency
-Fstop = 401;    % Stopband Frequency
+Fstop = 450;    % Stopband Frequency
 Apass = 1;      % Passband Ripple (dB)
 Astop = 60;     % Stopband Attenuation (dB)
 Fs    = 16000;  % Sampling Frequency
