@@ -95,7 +95,7 @@ function Phase3V4(fileName, extension, N)
     
     % Task 8 - Detect envelopes of rectified signals 
     
-    % Enveloping using built in matlab analytic envelop (hilbert transform)
+    % Enveloping using built in matlab peak envelope (spline interpolation)
     %initialize an array to store each enveloped channel
     envelopedSoundChannels = zeros(N, length(y));
     
