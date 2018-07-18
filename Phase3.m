@@ -149,7 +149,7 @@ function Phase3(fileName, extension, N)
         outputSignal = outputSignal + AMSignals(elm, :);
     end
     
-    maxVal = max(outputSignal);
+    maxVal = max(abs(outputSignal));
     %normalize the output signal by its max val
     outputSignal = outputSignal/maxVal;
     
