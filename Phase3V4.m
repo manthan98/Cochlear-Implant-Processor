@@ -90,15 +90,6 @@ function Phase3V4(fileName, extension, N)
     %plotting highest channel as a function of sample num
     plotSignal(channelLength, highestChannel, 'Sample', 'Magnitude');
     
-    %Plotting the highest and lowest channels against frequency
-    lowestFFT = abs(fft(lowestChannel));
-    highestFFT = abs(fft(highestChannel));
-    %Calculate the frequency axis, which is defined by the sampling rate
-    figure;
-    plot(lowestFFT);
-    figure;
-    plot(highestFFT);
-    
     % Task 7 - Rectify output of bandpass signals (envelope pt 1)
     rectifiedSoundChannels = abs(soundChannels);
     
@@ -111,7 +102,7 @@ function Phase3V4(fileName, extension, N)
     for elm = 1:N
         %Note, MATLAB R2015b or higher is required for the envelope
         %function
-        [upperEnvelope, lowerEnvelope] = envelope(rectifiedSoundChannels(elm, :), 100,'analytic');
+        [upperEnvelope, lowerEnvelope] = envelope(rectifiedSoundChannels(elm, :), 10,'peak');
         envelopedSoundChannels(elm, :) = upperEnvelope;
     end
     
