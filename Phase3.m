@@ -1,4 +1,5 @@
 function Phase3(fileName, extension, N)
+    tic
     soundFile = strcat(fileName, '.', extension);
     % 3.1
     [y, Fs] = audioread(soundFile);
@@ -158,4 +159,5 @@ function Phase3(fileName, extension, N)
     sound(outputSignal, Fs)
     %Write to file
     audiowrite(strcat('output',fileName, '.wav'), outputSignal, Fs);
+    toc
 end

@@ -1,4 +1,5 @@
-function Phase3v1(fileName, extension, N)
+function Phase3V5(fileName, extension, N)
+tic
     soundFile = strcat(fileName, '.', extension);
     % 3.1
     [y, Fs] = audioread(soundFile);
@@ -43,9 +44,24 @@ function Phase3v1(fileName, extension, N)
     %Task 4 - Filter Design
     
     %Step A: Determining the frequency bands
-
+    %Determine upper and lower bounds of human hearing in mels (unit of
+    %pitch)
+    melsLowerBound = frq2mel(100);
+    melsUpperBound = frq2mel(7900); % Should be 8000.
+    
     %Divide pitches into N channels of even width
-    freqChannels = linspace(100, 7900, N + 1);
+    melsChannels = linspace(melsLowerBound, melsUpperBound, N + 1);
+    
+    %Convert channels from pitches (mels) to frequency (Hz)
+    freqChannels = mel2frq(melsChannels);
+    arr = ones(N + 1);
+    %Plotting visual rep of channel widths (pitch in mels)
+    figure;
+    plot(melsChannels, arr, '-x');
+    
+    %Plotting visual rep of channel widths (frequency in Hz)
+    figure;
+    plot(freqChannels, arr, '-o');
     
     %initialize an array to store each channel of the inputted sound
     soundChannels = zeros(N, length(y));
@@ -55,7 +71,8 @@ function Phase3v1(fileName, extension, N)
     %use a filter to split the noise into N channels
     for elm = 1:N
         % Generate Kaiser Window filter with the given bands.
-        filt = getKaiserWindow(freqChannels(elm), freqChannels(elm + 1));
+%         filt = getKaiserWindow(freqChannels(elm), freqChannels(elm + 1));
+        filt = getEquirippleFilter(freqChannels(elm), freqChannels(elm + 1));
         
         % Use the filter on the given sound input.
         filteredChannel = filter(filt, y);
@@ -134,7 +151,7 @@ function Phase3v1(fileName, extension, N)
         outputSignal = outputSignal + AMSignals(elm, :);
     end
     
-    maxVal = max(abs(outputSignal));
+    maxVal = max(outputSignal);
     %normalize the output signal by its max val
     outputSignal = outputSignal/maxVal;
     
@@ -143,4 +160,5 @@ function Phase3v1(fileName, extension, N)
     sound(outputSignal, Fs)
     %Write to file
     audiowrite(strcat('output',fileName, '.wav'), outputSignal, Fs);
+    toc
 end

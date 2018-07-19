@@ -1,4 +1,5 @@
 function Phase3V2(fileName, extension, N)
+tic
     soundFile = strcat(fileName, '.', extension);
     % 3.1
     [y, Fs] = audioread(soundFile);
@@ -70,7 +71,6 @@ function Phase3V2(fileName, extension, N)
     %use a filter to split the noise into N channels
     for elm = 1:N
         % Generate Kaiser Window filter with the given bands.
-%         filt = getKaiserWindow(freqChannels(elm), freqChannels(elm + 1));
         filt = getButterworthFilter(freqChannels(elm), freqChannels(elm + 1));
         
         % Use the filter on the given sound input.
@@ -159,4 +159,5 @@ function Phase3V2(fileName, extension, N)
     sound(outputSignal, Fs)
     %Write to file
     audiowrite(strcat('output',fileName, '.wav'), outputSignal, Fs);
+    toc
 end
