@@ -156,7 +156,7 @@ function Phase3(fileName, extension, N)
     
     %Task 13
     %Play output sound
-    %sound(outputSignal, Fs)
+    sound(outputSignal, Fs)
     %Write to file
     audiowrite(strcat('output ', num2str(N),' ', fileName, '.wav'), outputSignal, Fs);
     toc

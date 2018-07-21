@@ -1,5 +1,6 @@
-function Phase3(fileName, extension, N)
-tic
+function Phase3V3(fileName, extension, N)
+    %tic inserted to begin counting runtime
+    tic
     soundFile = strcat(fileName, '.', extension);
     % 3.1
     [y, Fs] = audioread(soundFile);
@@ -20,6 +21,7 @@ tic
     % 3.5
     %plotting audio as a function of sample num
     plotSignal(soundSize(1), y, 'Sample', 'Magnitude');
+    
     % 3.6
     if Fs > 16000
         y = resample(y, 16000, Fs);
@@ -27,17 +29,6 @@ tic
         %reference
         Fs = 16000;
     end
-    
-    %sound(y, Fs);
-
-    % 3.7
-    newSize = size(y);
-    
-    % Duration of signal is number of samples divided by freq
-    duration = newSize(1)/16000;
-    
-    % From time = 0 to duration of signal with n samples
-    x = linspace(0, duration, newSize(1));
     
     %PHASE 2 STARTS HERE
     
@@ -55,6 +46,7 @@ tic
     %Convert channels from pitches (mels) to frequency (Hz)
     freqChannels = mel2frq(melsChannels);
     arr = ones(N + 1);
+    
     %Plotting visual rep of channel widths (pitch in mels)
     figure;
     plot(melsChannels, arr, '-x');
@@ -92,8 +84,10 @@ tic
     plotSignal(channelLength, highestChannel, 'Sample', 'Magnitude');
     
     %Plotting the highest and lowest channels against frequency
+    %FFT is only used for visualization purposes
     lowestFFT = abs(fft(lowestChannel));
     highestFFT = abs(fft(highestChannel));
+    
     %Calculate the frequency axis, which is defined by the sampling rate
     figure;
     plot(lowestFFT);
@@ -105,7 +99,6 @@ tic
     
     % Task 8 - Detect envelopes of rectified signals using LPF 400Fc
     % (envelope part 2).
-    
     %initialize an array to store each enveloped channel
     envelopedSoundChannels = zeros(N, length(y));
     
@@ -133,9 +126,11 @@ tic
         % Create vector from time = 0 to duration of signal with n samples.
         duration = channelLength/16000;
         x = linspace(0, duration, channelLength);
+        
         % Each center freq is the arithmetic mean of the channel's two
         % cutoff frequencies
         centerFreq = sqrt(freqChannels(elm)*freqChannels(elm + 1));
+        
         %create cos signal that resonates at center freq
         cosSignal =  cos(centerFreq*2*pi*x);
         cosineSignals(elm, :) = cosSignal;
@@ -168,5 +163,7 @@ tic
     sound(outputSignal, Fs)
     %Write to file
     audiowrite(strcat('output',fileName, '.wav'), outputSignal, Fs);
+    
+    %toc inserted to display runtime
     toc
 end
