@@ -1,4 +1,4 @@
-# Cochlear Implant Analyzer
+# Cochlear Implant Processor
 
 Cochlear implant signal processor that reads an input sound file, processes it, and outputs filtered file. The sound
 signal is divided into N frequency channels, and processed through a bank of bandpass filters. In this processor, 
